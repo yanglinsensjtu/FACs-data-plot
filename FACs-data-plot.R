@@ -98,22 +98,12 @@ re_c <- function(t_l = t_l, o_t_l = o_t_l, s_t_l = s_t_l, titlet = titlet){
 
 file_name_list <- dir(pattern = "\\.CSV")
 
-t_treatment_names <- c("migb",
-                       "migb.UBE3C.sgRNA1.6",
-                       "migb.UBE3C.sgRNA1.10",
-                       "migb.RAB3A.sgRNA1.10",
-                       "migb.RAB3A.sgRNA2.11",
-                       "migb.RAB3B.sgRNA")
-t_label_names <- c("MIGBc + vector",
-                   "MIGBc + UBE3C sgRNA1-6",
-                   "MIGBc + UBE3C sgRNA1-10",
-                   "MIGBc + RAB3A sgRNA1-10",
-                   "MIGBc + RAB3A sgRNA2-11",
-                   "MIGBc + RAB3A sgRNA")
+t_treatment_names <- c()
+t_label_names <- c()
 
-title_1 <- c("the mCherry IRES EGFPBOKcyto(MIGBc) affected by")
+title_1 <- c()
 
-title_2 <- c('UBE3C sgRNA monoclony','RAB3A sgRNA monoclony')
+title_2 <- c()
 # plot --------------------------------------------------------------------
 
 
