@@ -1,5 +1,3 @@
-rm(list = ls())
-gc()
 library(tidyverse)
 # Functions ---------------------------------------------------------------
 
@@ -10,7 +8,8 @@ library(tidyverse)
 # Treatment_names are used as the samples names which were used in the data manipulation
 # and plot procedure.
 
-c_data <- function(files = file_name_list, treatment_names = tnames){
+c_data <- function(files = file_name_list, 
+                   treatment_names = tnames){
   nm <- vector('list',length(files))
   migb <- vector('list',length(files))
   for (i in seq_along(files)) {
@@ -58,77 +57,4 @@ FACS_plot <- function(data = migbc,
   
   ggsave(filename = str_c(plot_title,".tiff"),width = 10, height = 6.18)
 }
-
-get_treatment_label_names <- function(t_treatment_names = t_treatment_names,
-                                      t_label_names = t_label_names,
-                                      x = x,
-                                      y = y){
-  tn <- vector('character', (y - x + 1))
-  ln <- vector('character', (y - x + 1))
-  for(i in c(x:y)){
-    tn[i] <- t_treatment_names[i]
-    ln[i] <- t_label_names[i]
-  }
-  tn <- tn[!tn=='']
-  ln <- ln[!ln=='']
-  t_l <- list(tn, ln)
-  t_l
-}
-
-get_title <- function(title_1 = title_1, title_2 = title_2){
-  titlet <- vector('character',length(title_2))
-  for (i in seq_along(titlet)) {
-    titlet[i] <- str_c(title_1,' ', title_2[i])
-  }
-  titlet
-}
-
-re_c <- function(t_l = t_l, o_t_l = o_t_l, s_t_l = s_t_l, titlet = titlet){
-  t_l[3] <- titlet[1]
-  o_t_l[3] <- titlet[2]
-  s_t_l[3] <- titlet[3]
-  
-  treatment_names <- list(t_l[[1]],o_t_l[[1]],s_t_l[[1]])
-  label_names <- list(t_l[[2]],o_t_l[[2]],s_t_l[[2]])
-  title_names <- list(t_l[[3]],o_t_l[[3]],s_t_l[[3]])
-  tibble(treatment_names, label_names, title_names)
-}
-# Arguments ---------------------------------------------------------------
-
-
-file_name_list <- dir(pattern = "\\.CSV")
-
-t_treatment_names <- c()
-t_label_names <- c()
-
-title_1 <- c()
-
-title_2 <- c()
-# plot --------------------------------------------------------------------
-
-
-data <- c_data(files = file_name_list, treatment_names = t_treatment_names)
-
-titlet <- get_title(title_1, title_2)
-
-t_l <- get_treatment_label_names(t_treatment_names, t_label_names, 1, 6)
-o_t_l <- get_treatment_label_names(t_treatment_names,t_label_names, 1, 3)
-s_t_l <- get_treatment_label_names(t_treatment_names,t_label_names, 4, 6)
-
-treatment_label_title_names <- re_c(t_l,o_t_l,s_t_l,titlet)
-
-for (i in (1:ncol(treatment_label_title_names))) {
-  FACS_plot(data, 
-            treatment_label_title_names$treatment_names[[i]], 
-            treatment_label_title_names$label_names[[i]],
-            treatment_label_title_names$title_names[[i]], 
-            xmin = 0.4, xmax = 1)
-  print(i)
-}
-
-rm(list = ls())
-gc()
-
-
-
 
