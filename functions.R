@@ -57,4 +57,16 @@ FACS_plot <- function(data = migbc,
   
   ggsave(filename = str_c(plot_title,".tiff"),width = 10, height = 6.18)
 }
+# To make sure the CSV files containing the FACs data which acquired 
+# from the Guava was map to the experiment treated sample names. 
+# This function combined the CSV file name with the sample treatment 
+# label names.
+
+C_filename_treatname <- function(filename = file_name_list, treatname = treat_names){
+  fntn <- vector('list',length(filename))
+  for (i in seq_along(filename)){
+    fntn[[i]] <- str_c(filename[[i]],'-',treatname[[i]])
+  }
+  fntn
+}
 
