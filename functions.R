@@ -14,10 +14,19 @@ c_data <- function(files = file_name_list,
   migb <- vector('list',length(files))
   for (i in seq_along(files)) {
     nm[[i]] <- read_csv(files[[i]])
-    nm[[i]] <- nm[[i]] %>% 
-      filter(P01.R1.R2 == 1) %>%
-      mutate(treatment = `GRN-B-HLog`/`RED-B-HLog`) %>% 
-      select(treatment)
+    
+    if(sum(nm[[i]]$P01.R1.R2) >= 5000){
+      nm[[i]] <- nm[[i]] %>% 
+        filter( P01.R1.R2 == 1) %>%  
+        mutate(treatment = `GRN-B-HLog`/`RED-B-HLog`) %>% 
+        select(treatment)
+    }else{
+      nm[[i]] <- nm[[i]] %>% 
+        filter(P01.R1 == 1) %>% 
+        sample_n(10000) %>% 
+        mutate(treatment = `GRN-B-HLog`/`RED-B-HLog`) %>% 
+        select(treatment)}
+
     names(nm[[i]]) <- treatment_names[i]
     migb <- bind_cols(migb, nm[[i]])
   }
