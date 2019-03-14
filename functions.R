@@ -79,3 +79,45 @@ C_filename_treatname <- function(filename = file_name_list, treatname = treat_na
   fntn
 }
 
+
+plotJC1 <- function(filenm = filenm,
+                    titlenm = titlenm ){
+  datas <- read_csv(file = filenm)
+  
+  
+  datas <- datas %>% filter(P01.R1 == 1)
+  
+  datas$labeltotal <- 'total'
+  datas1w <- datas %>% filter(`GRN-B-HLog`>log10(10000))
+  datas1w$label1w <- 'apo'
+  GFPpPercent <- str_c(as.character(GFPpPercent <- count(datas1w)$n/5000*100), '%',' ', 'early apoptotic cells')
+  
+  ggplot(datas, 
+         aes(x = `GRN-B-HLog`, 
+             y = `YEL-B-HLog`,
+             color = labeltotal)) +
+    geom_point(size = 0.1) +
+    geom_point(data = datas1w, 
+               aes(x = `GRN-B-HLog`, 
+                   y = `YEL-B-HLog`,
+                   color = label1w),
+               size = 0.1) +
+    labs(x = 'Green', y = 'Red', title = 'JC-1 probe') +
+    scale_color_manual(name = 'JC-1 probe',
+                       limits = c('total', 'apo'),
+                       label = c('Healthy cells', GFPpPercent),
+                       values = c('black','red')) +
+    xlim(0,5) +
+    ylim(0,5) +
+    theme(axis.title = element_text(family = "Helvetica"), 
+          axis.text = element_text(family = "Helvetica"), 
+          axis.text.x = element_text(family = "Helvetica"), 
+          axis.text.y = element_text(family = "Helvetica"), 
+          plot.title = element_text(family = "Helvetica", hjust = 0.5), 
+          legend.text = element_text(family = "Helvetica"), 
+          legend.title = element_text(family = "Helvetica")) +
+    guides(color = guide_legend(override.aes = list(alpha = 1,size = 3))) 
+  
+  
+  ggsave(filename = str_c(titlenm,".tiff"),width = 10, height = 6.18)
+}
