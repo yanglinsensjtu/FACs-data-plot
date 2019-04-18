@@ -15,12 +15,12 @@ c_data <- function(files = file_name_list,
   for (i in seq_along(files)) {
     nm[[i]] <- read_csv(files[[i]])
     
-    if(sum(nm[[i]]$P01.R1.R2) >= 5000){
+    if(sum(nm[[i]]$P01.R1.R2) >= 5000){ # second gate data
       nm[[i]] <- nm[[i]] %>% 
         filter( P01.R1.R2 == 1) %>%  
         mutate(treatment = `GRN-B-HLog`/`RED-B-HLog`) %>% 
         select(treatment)
-    }else if(sum(nm[[i]]$P01.R1) == 5000){
+    }else if(sum(nm[[i]]$P01.R1) == 5000){ #first gate data
       nm[[i]] <- nm[[i]] %>% 
         filter( P01.R1 == 1) %>%  
         mutate(treatment = `GRN-B-HLog`/`RED-B-HLog`) %>% 
