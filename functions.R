@@ -20,6 +20,11 @@ c_data <- function(files = file_name_list,
         filter( P01.R1.R2 == 1) %>%  
         mutate(treatment = `GRN-B-HLog`/`RED-B-HLog`) %>% 
         select(treatment)
+    }else if(sum(nm[[i]]$P01.R1) == 5000){
+      nm[[i]] <- nm[[i]] %>% 
+        filter( P01.R1 == 1) %>%  
+        mutate(treatment = `GRN-B-HLog`/`RED-B-HLog`) %>% 
+        select(treatment)
     }else{
       nm[[i]] <- nm[[i]] %>% 
         filter(P01.R1 == 1) %>% 
