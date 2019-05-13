@@ -1,4 +1,7 @@
-library(tidyverse)
+if (!require(tidyverse)) {
+  install.packages('tidyverse')
+  library(tidyverse)
+} 
 # Functions ---------------------------------------------------------------
 
 # Two arguments : files_name_list and treatment_names.
